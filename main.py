@@ -126,6 +126,12 @@ fig.update_layout(
     height=500
 )
 
+st.markdown("### ✏️ 내가 알 수 있는 것")
+st.text_area(
+    "그래프를 보고 알게 된 점을 직접 적어 보세요.",
+    height=100,
+    placeholder="예: 관객 수가 특정 날짜에 크게 증가했다..."
+
 )
 
 
