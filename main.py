@@ -126,12 +126,6 @@ fig.update_layout(
     height=500
 )
 
-st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("### 💡 이 그래프로 알 수 있는 것")
-st.info(
-    "이 그래프를 통해 선택한 영화의 날짜별 관객 수 변화와 "
-    "관객이 많았던 시점 및 적었던 시점을 알 수 있습니다."
 )
 
 
