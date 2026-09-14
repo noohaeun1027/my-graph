@@ -160,19 +160,29 @@ st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세
 # ── 그래프 4. 일관객 합계 TOP 10 ─────────────────────────────
 st.header("4. 일관객 합계 TOP 10")
 
-# 영화별로 이 기간의 일관객을 모두 더합니다.
-movie_summary = (
-    df.groupby("영화명")
-    .agg(
-        총관객=("일관객", "sum"),
-        10위권_일수=("날짜", "count")
-    )
-    .sort_values("총관객", ascending=False)
+# 영화별 총 관객 수를 계산합니다.
+movie_total = (
+    df.groupby("영화명")["일관객"]
+    .sum()
+    .sort_values(ascending=False)
     .head(10)
-    .reset_index()
 )
 
-# 그래프에서 위쪽에 관객이 많은 영화가 오도록 순서를 뒤집습니다.
+# 영화별로 10위권에 기록된 날짜 수를 계산합니다.
+movie_days = (
+    df[df["영화명"].isin(movie_total.index)]
+    .groupby("영화명")["날짜"]
+    .nunique()
+)
+
+# 그래프용 데이터프레임을 만듭니다.
+movie_summary = pd.DataFrame({
+    "영화명": movie_total.index,
+    "총관객": movie_total.values,
+    "10위권_일수": movie_days.reindex(movie_total.index).values
+})
+
+# 관객이 많은 영화가 그래프 위쪽에 오도록 순서를 뒤집습니다.
 movie_summary = movie_summary.sort_values("총관객", ascending=True)
 
 # 가로 막대그래프를 만듭니다.
