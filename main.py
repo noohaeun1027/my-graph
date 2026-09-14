@@ -220,3 +220,69 @@ st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세
 
 
 # ── 앞으로 그래프 5가 이 아래에 추가됩니다 ─────────────────
+# ── 그래프 5. 월 × 요일별 일관객 합계 히트맵 ─────────────────
+st.header("5. 월 × 요일별 일관객 합계")
+
+# 날짜에서 월과 요일을 뽑습니다.
+heatmap_data = df.copy()
+heatmap_data["월"] = heatmap_data["날짜"].dt.month
+
+# 월요일=0, 화요일=1, ..., 일요일=6
+weekday_order = [
+    "월요일", "화요일", "수요일",
+    "목요일", "금요일", "토요일", "일요일"
+]
+
+heatmap_data["요일"] = heatmap_data["날짜"].dt.dayofweek.map(
+    dict(enumerate(weekday_order))
+)
+
+# 월 × 요일별 일관객을 합산합니다.
+heatmap_data = (
+    heatmap_data
+    .groupby(["월", "요일"], as_index=False)["일관객"]
+    .sum()
+)
+
+# 피벗해서 히트맵 형태로 만듭니다.
+heatmap_table = heatmap_data.pivot(
+    index="월",
+    columns="요일",
+    values="일관객"
+)
+
+# 요일을 월요일부터 일요일 순서로 정렬합니다.
+heatmap_table = heatmap_table.reindex(columns=weekday_order)
+
+# Plotly 히트맵을 만듭니다.
+fig5 = px.imshow(
+    heatmap_table,
+    labels={
+        "x": "요일",
+        "y": "월",
+        "color": "일관객 합계"
+    },
+    x=weekday_order,
+    y=heatmap_table.index,
+    text_auto=".0f",
+    aspect="auto",
+    color_continuous_scale="YlOrRd"
+)
+
+fig5.update_traces(
+    hovertemplate=(
+        "%{y}월 %{x}"
+        "<br>일관객 합계 %{z:,}명"
+        "<extra></extra>"
+    )
+)
+
+fig5.update_layout(
+    xaxis_title="요일",
+    yaxis_title="월",
+    height=550
+)
+
+st.plotly_chart(fig5, width="stretch")
+
+st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
