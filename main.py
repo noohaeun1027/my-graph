@@ -45,7 +45,7 @@ fig.update_traces(
 
 st.plotly_chart(fig, width="stretch")
 
-st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+st.caption("이 그래프로 알 수 있는 것: 한 영화의 날짜별 관객 수를 보면 영화가 나온 후 관객 수가 어떻게 변하는지 알 수 있다.")
 
 
 # ── 그래프 2. 일관객 합계가 가장 큰 5편 ─────────────────────
@@ -96,7 +96,7 @@ fig2.update_layout(
 
 st.plotly_chart(fig2, width="stretch")
 
-st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+st.caption("이 그래프로 알 수 있는 것: 관객이 많았던 영화들도 영화마다 관객 수가 늘고 줄어드는 시기가 다르다는 것을 알 수 있다.")
 
 
 # ── 앞으로 그래프 3, 4, 5가 이 아래에 추가됩니다 ──────────
@@ -153,7 +153,7 @@ fig3.update_layout(
 
 st.plotly_chart(fig3, width="stretch")
 
-st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+st.caption("이 그래프로 알 수 있는 것: 날짜별 관객 수를 비교하면 어떤 날에 영화관에 사람이 많이 갔는지 알 수 있다.")
 
 
 # ── 앞으로 그래프 4, 5가 이 아래에 추가됩니다 ─────────────
@@ -216,7 +216,7 @@ fig4.update_layout(
 
 st.plotly_chart(fig4, width="stretch")
 
-st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+st.caption("이 그래프로 알 수 있는 것: 전체 기간 동안 관객 수가 가장 많았던 영화와 적었던 영화를 비교할 수 있다.")
 
 
 # ── 앞으로 그래프 5가 이 아래에 추가됩니다 ─────────────────
@@ -285,4 +285,4 @@ fig5.update_layout(
 
 st.plotly_chart(fig5, width="stretch")
 
-st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+st.caption("이 그래프로 알 수 있는 것: 월과 요일에 따라 영화관에 오는 사람 수가 다르다는 것을 알 수 있다.")
