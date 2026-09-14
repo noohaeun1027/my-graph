@@ -157,3 +157,56 @@ st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세
 
 
 # ── 앞으로 그래프 4, 5가 이 아래에 추가됩니다 ─────────────
+# ── 그래프 4. 일관객 합계 TOP 10 ─────────────────────────────
+st.header("4. 일관객 합계 TOP 10")
+
+# 영화별로 이 기간의 일관객을 모두 더합니다.
+movie_summary = (
+    df.groupby("영화명")
+    .agg(
+        총관객=("일관객", "sum"),
+        10위권_일수=("날짜", "count")
+    )
+    .sort_values("총관객", ascending=False)
+    .head(10)
+    .reset_index()
+)
+
+# 그래프에서 위쪽에 관객이 많은 영화가 오도록 순서를 뒤집습니다.
+movie_summary = movie_summary.sort_values("총관객", ascending=True)
+
+# 가로 막대그래프를 만듭니다.
+fig4 = px.bar(
+    movie_summary,
+    x="총관객",
+    y="영화명",
+    orientation="h",
+    labels={
+        "총관객": "일관객 합계",
+        "영화명": "영화"
+    }
+)
+
+# 마우스를 올리면 총 관객 수와 10위권에 든 날수가 보이게 합니다.
+fig4.update_traces(
+    customdata=movie_summary[["10위권_일수"]],
+    hovertemplate=(
+        "영화 %{y}"
+        "<br>일관객 합계 %{x:,}명"
+        "<br>10위권에 든 날수 %{customdata[0]}일"
+        "<extra></extra>"
+    )
+)
+
+fig4.update_layout(
+    xaxis_title="일관객 합계(명)",
+    yaxis_title="영화",
+    height=550
+)
+
+st.plotly_chart(fig4, width="stretch")
+
+st.caption("이 그래프로 알 수 있는 것: (한 문장으로 적어 보세요)")
+
+
+# ── 앞으로 그래프 5가 이 아래에 추가됩니다 ─────────────────
